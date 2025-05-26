@@ -11,38 +11,18 @@ class CustomizeView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    // 时针宽度
-    private val mHourPointWidth = 15f
+    private val mHourPointWidth = 15f     // 时针宽度
+    private val mMinutePointWidth = 10f   // 分针宽度
+    private val mSecondPointWidth = 4f    // 秒针宽度
+    private val mPointRange = 20F         // 指针圆角弧度
+    private val mNumberSpace = 10f        // 刻度线与数字之间的间距
+    private val mCircleWidth = 4.0F       // 外圈圆的线条宽度
+    private val scaleMax = 50             // 整点（长）刻度的长度
+    private val scaleMin = 25             // 非整点（短）刻度的长度
 
-    // 分针宽度
-    private val mMinutePointWidth = 10f
-
-    // 秒针宽度
-    private val mSecondPointWidth = 4f
-
-    // 指针矩形弧度
-    private val mPointRange = 20F
-
-    // 刻度与数字间距
-    private val mNumberSpace = 10f
-
-    // 表盘宽度
-    private val mCircleWidth = 4.0F
-
-    // 设置表盘整点刻度尺寸
-    private val scaleMax = 50
-
-    // 设置表盘非整点刻度尺寸
-    private val scaleMin = 25
-
-    // View宽度
-    private var mWidth = 0
-
-    // View高度
-    private var mHeight = 0
-
-    // 圆半径，默认200像素
-    private var radius = 300.0F
+    private var mWidth = 0                // View 宽度
+    private var mHeight = 0               // View 高度
+    private var radius = 300.0F           // 表盘半径，初始值 300
 
     // 画笔
     private val mPaint: Paint by lazy {
