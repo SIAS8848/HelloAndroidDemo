@@ -33,7 +33,7 @@ class CustomizeView @JvmOverloads constructor(
     }
 
 
-    // 初始化画笔属性
+    // 初始化画笔属性，设置字体大小、加粗、抗锯齿，让绘制更清晰
     init {
         mPaint.textSize = 35F
         mPaint.typeface = Typeface.DEFAULT_BOLD
@@ -43,17 +43,28 @@ class CustomizeView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
+        //调用了自定义的 onMeasuredSpec() 方法，对传入的宽度/高度进行计算
+        //然后加上两倍 mCircleWidth（也就是外圈线条的宽度），防止线条画到外面去。
         mWidth = onMeasuredSpec(widthMeasureSpec) + (mCircleWidth * 2).toInt()
         mHeight = onMeasuredSpec(heightMeasureSpec) + (mCircleWidth * 2).toInt()
 
+        //更新半径
         radius = (mWidth - mCircleWidth * 2) / 2
         setMeasuredDimension(mWidth, mHeight)
     }
 
+    //计算“在不同测量模式下，这个 View 实际应该占多大”
     private fun onMeasuredSpec(measureSpec: Int): Int {
 
         var specViewSize = 0
+        /*
+        specMode：获取测量模式，有三个可能值：
+        EXACTLY: 父布局希望你就是这个大小（比如 match_parent, 或设置了具体数值）。
+        AT_MOST: 父布局希望你“不要超过这个大小”（比如 wrap_content）。
+        UNSPECIFIED: 父布局没有限制（几乎不用管这种情况）。
+
+        specSize：从 measureSpec 中取出的建议最大尺寸，单位是像素。
+         */
         val specMode = MeasureSpec.getMode(measureSpec)
         val specSize = MeasureSpec.getSize(measureSpec)
 
